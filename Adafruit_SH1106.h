@@ -28,6 +28,7 @@ However, SH1106 driver don't provide several functions such as scroll commands.
 
 
 //#include <SPI.h>
+#include <hardware/i2c.h>
 #include "Adafruit_GFX.h"
 
 #define BLACK 0
@@ -152,10 +153,11 @@ public:
    virtual void drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color);
 
 private:
-   I2C    i2c;
-   int8_t _i2caddr;
-   int8_t _vccstate;
+   i2c_inst_t *i2c;
+   int8_t     _i2caddr;
+   int8_t     _vccstate;
   
    inline void drawFastVLineInternal(int16_t x, int16_t y, int16_t h, uint16_t color) __attribute__((always_inline));
    inline void drawFastHLineInternal(int16_t x, int16_t y, int16_t w, uint16_t color) __attribute__((always_inline));
 };
+

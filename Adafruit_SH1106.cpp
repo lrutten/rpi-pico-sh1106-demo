@@ -29,6 +29,7 @@ However, SH1106 driver don't provide several functions such as scroll commands.
 // #include "mbed.h"
 
 #include <stdlib.h>
+#include <cstring>
 
 
 #include "Adafruit_GFX.h"
@@ -143,10 +144,10 @@ void Adafruit_SH1106::drawPixel(int16_t x, int16_t y, uint16_t color)
 }
 
 // initializer for I2C - we only indicate the reset pin!
-Adafruit_SH1106::Adafruit_SH1106() : Adafruit_GFX(SH1106_LCDWIDTH, SH1106_LCDHEIGHT), i2c(I2C_SDA, I2C_SCL)
+Adafruit_SH1106::Adafruit_SH1106() : Adafruit_GFX(SH1106_LCDWIDTH, SH1106_LCDHEIGHT), i2c(i2c1)
 {
 }
-  
+
 
 void Adafruit_SH1106::begin(uint8_t vccstate, uint8_t i2caddr, bool reset)
 {
@@ -221,11 +222,11 @@ void Adafruit_SH1106::SH1106_command(uint8_t c)
 { 
    // I2C
    uint8_t control = 0x00;   // Co = 0, D/C = 0
-   i2c.start();
-   i2c.write(_i2caddr);
-   i2c.write(control);
-   i2c.write(c);
-   i2c.stop();
+   i2c->start();
+   i2c->write(_i2caddr);
+   i2c->write(control);
+   i2c->write(c);
+   i2c->stop();
 }
 
 // startscrollright
